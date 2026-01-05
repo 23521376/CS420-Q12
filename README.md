@@ -104,15 +104,3 @@ Các mô hình được đánh giá bằng những độ đo phổ biến trong 
 
 Kết quả cho thấy các mô hình học chuyển giao vượt trội hơn rõ rệt so với phương pháp truyền thống, đặc biệt trong việc cải thiện hiệu năng trên các lớp dữ liệu thiểu số.
 
----
-
-## 6. Cấu trúc thư mục
-```text
-CS420-Q12/
-├── data/                # Dữ liệu và tập chia
-├── features/            # Đặc trưng trích xuất
-├── models/              # Mô hình đã huấn luyện
-├── notebooks/           # Thực nghiệm và phân tích
-├── scripts/             # Script huấn luyện và đánh giá
-├── results/             # Kết quả và confusion matrix
-└── README.md
