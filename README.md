@@ -1,116 +1,118 @@
 # CS420-Q12  
-**Age Group Classification from Facial Images**
+**Phân loại nhóm tuổi từ ảnh khuôn mặt**
 
-## 1. Overview
-This repository contains the implementation and experimental results for **Question 12 (Q12)** of the **CS420** course.  
-The project focuses on **age group classification from facial images** using both:
+## 1. Giới thiệu
+Repository này chứa mã nguồn và kết quả thực nghiệm cho **Câu 12 (Q12)** của học phần **CS420**.  
+Mục tiêu của đề tài là **phân loại nhóm tuổi từ ảnh khuôn mặt**, dựa trên hai hướng tiếp cận chính:
 
-- Traditional machine learning approaches with handcrafted features, and  
-- Deep learning models based on **transfer learning**.
+- Phương pháp phân loại ảnh truyền thống với đặc trưng thủ công  
+- Phương pháp học sâu sử dụng **học chuyển giao (Transfer Learning)**  
 
-The **UTKFace dataset** is used for all experiments.
-
----
-
-## 2. Dataset
-- **Dataset:** UTKFace  
-- **Number of images:** 23,625 (19,742 after filtering)  
-- **Image format:** JPEG  
-- **Resolution:** 200 × 200  
-- **Age range:** 1–116  
-
-### Age Group Labels
-| Group | Age Range |
-|------|-----------|
-| 1 | 1–12 (Children) |
-| 2 | 13–19 (Teenagers) |
-| 3 | 20–39 (Young Adults) |
-| 4 | 40–59 (Middle-aged) |
-| 5 | 60+ (Elderly) |
-
-Dataset split: **80% Train – 10% Validation – 10% Test** (stratified).
+Toàn bộ thí nghiệm được thực hiện trên **tập dữ liệu UTKFace**.
 
 ---
 
-## 3. Methods
+## 2. Tập dữ liệu
+- **Tên tập dữ liệu:** UTKFace  
+- **Số lượng ảnh:** 23.625 ảnh (19.742 ảnh sau khi lọc)  
+- **Định dạng:** JPEG  
+- **Độ phân giải:** 200 × 200  
+- **Khoảng tuổi:** 1–116  
 
-### 3.1 Traditional Image Classification
-**Pipeline:**
-1. Grayscale conversion  
-2. Resize to 48 × 48  
-3. Feature extraction  
-4. PCA (retain 95% variance)  
-5. Classification  
+### Phân chia nhóm tuổi
+| Nhóm | Khoảng tuổi |
+|------|-------------|
+| 1 | 1–12 (Trẻ em) |
+| 2 | 13–19 (Thiếu niên) |
+| 3 | 20–39 (Thanh niên) |
+| 4 | 40–59 (Trung niên) |
+| 5 | 60+ (Người cao tuổi) |
 
-**Handcrafted features:**
+Tập dữ liệu được chia theo tỷ lệ **80% huấn luyện – 10% kiểm định – 10% kiểm thử**, sử dụng phương pháp **stratified split**.
+
+---
+
+## 3. Phương pháp
+
+### 3.1. Phân loại ảnh truyền thống
+**Quy trình thực hiện:**
+1. Chuyển ảnh sang ảnh xám  
+2. Chuẩn hóa kích thước về 48 × 48  
+3. Trích xuất đặc trưng  
+4. Giảm chiều dữ liệu bằng PCA (giữ 95% phương sai)  
+5. Huấn luyện mô hình phân loại  
+
+**Các đặc trưng sử dụng:**
 - Histogram of Oriented Gradients (HOG)  
 - Local Binary Patterns (LBP)  
-- Grayscale histogram  
+- Histogram cường độ xám  
 
-**Classifiers:**
-- Linear SVM  
+**Các mô hình phân loại:**
+- Linear Support Vector Machine (Linear SVM)  
 - K-Nearest Neighbors (KNN)  
 - Decision Tree  
 
 ---
 
-### 3.2 Transfer Learning
-Pretrained models on **ImageNet** were fine-tuned for 5-class age group classification.
+### 3.2. Học chuyển giao (Transfer Learning)
+Các mô hình học sâu được khởi tạo bằng trọng số huấn luyện trước trên **ImageNet** và được tinh chỉnh cho bài toán phân loại 5 nhóm tuổi.
 
-**Models used:**
+**Các mô hình được sử dụng:**
 - EfficientNet-B0  
 - EfficientNet-B3  
 - ResNet-18  
 - ResNet-34  
-- Vision Transformer (ViT-B/16)
+- Vision Transformer (ViT-B/16)  
 
-**Training settings:**
+**Cấu hình huấn luyện chung:**
 - Batch size: 64  
-- Loss: Cross-Entropy  
-- Optimizer: Adam  
-- Learning rate scheduling: ReduceLROnPlateau  
+- Hàm mất mát: Cross-Entropy Loss  
+- Bộ tối ưu: Adam  
+- Scheduler: ReduceLROnPlateau  
 - Early stopping  
 
 ---
 
-## 4. Evaluation Metrics
+## 4. Độ đo đánh giá
+Các mô hình được đánh giá bằng những độ đo phổ biến trong bài toán phân loại nhiều lớp:
+
 - Accuracy  
-- Precision, Recall, F1-score (per class)  
+- Precision, Recall, F1-score theo từng lớp  
 - Macro Recall (Balanced Accuracy)  
 - Macro F1-score  
-- Confusion Matrix  
+- Ma trận nhầm lẫn (Confusion Matrix)  
 
 ---
 
-## 5. Results Summary
+## 5. Kết quả thực nghiệm
 
-### Traditional Methods
-| Model | Accuracy | Macro F1 |
-|------|----------|----------|
+### Phương pháp truyền thống
+| Mô hình | Accuracy | Macro F1 |
+|--------|----------|----------|
 | Linear SVM | 0.66 | 0.51 |
 | KNN | 0.62 | 0.48 |
 | Decision Tree | 0.54 | 0.38 |
 
-### Transfer Learning
-| Model | Accuracy | Macro F1 |
-|------|----------|----------|
+### Phương pháp học chuyển giao
+| Mô hình | Accuracy | Macro F1 |
+|--------|----------|----------|
 | EfficientNet-B0 | 0.80 | 0.74 |
 | EfficientNet-B3 | **0.80** | **0.75** |
 | ResNet-18 | 0.78 | 0.72 |
 | ResNet-34 | 0.78 | 0.73 |
 | ViT-B/16 | 0.76 | 0.69 |
 
-Transfer learning models significantly outperform traditional methods, especially on minority age groups.
+Kết quả cho thấy các mô hình học chuyển giao vượt trội hơn rõ rệt so với phương pháp truyền thống, đặc biệt trong việc cải thiện hiệu năng trên các lớp dữ liệu thiểu số.
 
 ---
 
-## 6. Project Structure
+## 6. Cấu trúc thư mục
 ```text
 CS420-Q12/
-├── data/                # Dataset and splits
-├── features/            # Extracted handcrafted features
-├── models/              # Trained models
-├── notebooks/           # Experiments and analysis
-├── scripts/             # Training and evaluation scripts
-├── results/             # Metrics and confusion matrices
+├── data/                # Dữ liệu và tập chia
+├── features/            # Đặc trưng trích xuất
+├── models/              # Mô hình đã huấn luyện
+├── notebooks/           # Thực nghiệm và phân tích
+├── scripts/             # Script huấn luyện và đánh giá
+├── results/             # Kết quả và confusion matrix
 └── README.md
